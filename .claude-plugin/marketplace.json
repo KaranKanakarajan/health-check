@@ -2,7 +2,7 @@
   "name": "health-check",
   "description": "Skills that check, fix and report on backend and frontend health.",
   "owner": {
-    "name": "YOUR_NAME"
+    "name": "karan"
   },
   "plugins": [
     {
