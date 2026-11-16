@@ -6,7 +6,7 @@
   "author": {
     "name": "karan"
   },
-  "repository": "https://github.com/karan/health-check",
+  "repository": "https://github.com/KaranKanakarajan/health-check",
   "license": "MIT",
   "keywords": ["express", "backend", "frontend", "ui", "ux", "responsive", "debug", "health-check", "audit"]
 }

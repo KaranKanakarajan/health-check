@@ -20,7 +20,7 @@ A check only counts as passed with proof from that run, such as command output, 
 In Claude Code, run:
 
 ```
-/plugin marketplace add karan/health-check
+/plugin marketplace add KaranKanakarajan/health-check
 /plugin install health-check@health-check
 ```
 
@@ -32,7 +32,7 @@ Restart Claude Code if the commands don't show up yet. To get new versions later
 Copy the skill folders into your skills directory. Without the plugin, the commands have no prefix (`/frontend-ui-health`).
 
 ```bash
-git clone https://github.com/karan/health-check.git
+git clone https://github.com/KaranKanakarajan/health-check.git
 cp -r health-check/skills/* ~/.claude/skills/
 ```
 
