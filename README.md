@@ -4,7 +4,7 @@ Two [Claude Code](https://claude.com/claude-code) skills that check a web app's 
 
 | Skill | What it checks |
 |---|---|
-| [`express-backend-debug`](skills/express-backend-debug/SKILL.md) | Node.js / Express backends: server boot and env vars, middleware order, routes, JWT auth, async error handling, database errors, basic security. 16 checks. |
+| [`express-backend-debug`](skills/express-backend-debug/SKILL.md) | Node.js / Express backends: server boot and env vars, middleware order, routes, JWT auth, async error handling, database errors, basic security, deep CORS checks (preflight, origins, credentials), one clear error format with codes, hints and request IDs, and reading the browser's Network panel to find what really failed. 22 checks. |
 | [`frontend-ui-health`](skills/frontend-ui-health/SKILL.md) | Web frontends (React, Vite, Next.js, plain HTML): every button, link and form, console and network errors, responsive layout at phone (375px), tablet (768px) and desktop (1440px), plus a senior-level UX review: spacing and type scale, contrast, consistency, loading/empty/error states, action feedback, form UX, focus and copy. 28 checks. |
 
 ## What you get
@@ -17,37 +17,64 @@ A check only counts as passed with proof from that run, such as command output, 
 
 ## Install
 
-In Claude Code, run:
+The skills use the open [Agent Skills](https://agentskills.io) `SKILL.md` format, so the same files work in Claude Code, Gemini CLI and Google Antigravity.
+
+### Claude Code
 
 ```
 /plugin marketplace add KaranKanakarajan/health-check
 /plugin install health-check@health-check
 ```
 
-Restart Claude Code if the commands don't show up yet. To get new versions later, run `/plugin marketplace update health-check`.
+Restart Claude Code if the commands don't show up yet. To update later, run `/plugin marketplace update health-check`.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/KaranKanakarajan/health-check
+```
+
+To update later, run `gemini extensions update health-check`.
+
+### Google Antigravity
+
+```bash
+agy plugin install https://github.com/KaranKanakarajan/health-check
+```
+
+To update, run the same command again.
 
 <details>
-<summary>Manual install (without the plugin system)</summary>
+<summary>Manual install (any agent, no plugin system)</summary>
 
-Copy the skill folders into your skills directory. Without the plugin, the commands have no prefix (`/frontend-ui-health`).
+Copy the skill folders into your agent's skills directory:
 
 ```bash
 git clone https://github.com/KaranKanakarajan/health-check.git
-cp -r health-check/skills/* ~/.claude/skills/
+cp -r health-check/skills/* ~/.claude/skills/    # Claude Code
+cp -r health-check/skills/* ~/.gemini/skills/    # Gemini CLI
+cp -r health-check/skills/* ~/.agents/skills/    # shared folder (Gemini CLI, Codex, Copilot CLI)
 ```
 
 </details>
 
 ## Use
 
-In Claude Code, inside your project:
+**Claude Code** - type the slash command inside your project:
 
 ```
 /health-check:express-backend-debug   check backend health and give me the report
 /health-check:frontend-ui-health      check the UI on mobile, tablet and desktop and fix it
 ```
 
-Claude also loads them on its own when you say things like "check my backend health", "why does login return 401", "draw my backend simply", or "the navbar is broken on mobile".
+**Gemini CLI and Antigravity** - ask in plain words. The agent reads each skill's description and loads the right one:
+
+```
+check my backend health and give me the report
+check my UI on mobile, tablet and desktop and fix it
+```
+
+All agents also load the skills on their own when you say things like "why does login return 401", "I get a CORS error", "draw my backend simply", or "the navbar is broken on mobile".
 
 ## Requirements
 

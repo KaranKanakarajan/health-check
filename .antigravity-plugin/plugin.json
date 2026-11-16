@@ -1,0 +1,19 @@
+{
+  "name": "health-check",
+  "displayName": "Health Check",
+  "version": "1.0.0",
+  "description": "Check, fix and report on Express backend health (routes, auth, CORS, clear errors, Network panel) and frontend UI health (buttons, mobile/tablet layout, senior-level UX).",
+  "suggestedPrompts": [
+    "Check my backend health and give me a report",
+    "Check my UI on mobile, tablet and desktop and fix it",
+    "Why does my frontend show a CORS error?"
+  ],
+  "category": "Developer Tools",
+  "keywords": ["express", "backend", "frontend", "ui", "ux", "responsive", "cors", "debug", "health-check", "audit"],
+  "author": {
+    "name": "karan"
+  },
+  "homepage": "https://github.com/KaranKanakarajan/health-check",
+  "repository": "https://github.com/KaranKanakarajan/health-check",
+  "license": "MIT"
+}

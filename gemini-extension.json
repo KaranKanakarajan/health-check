@@ -1,0 +1,5 @@
+{
+  "name": "health-check",
+  "description": "Check, fix and report on Express backend health and frontend UI health (buttons, mobile/tablet layout, senior-level UX).",
+  "version": "1.0.0"
+}

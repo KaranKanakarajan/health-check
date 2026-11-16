@@ -9,7 +9,9 @@ description: Use when the user asks to health-check, audit, test or fix a web fr
 
 Two jobs: make it **work** (checks 1-14), then make it **feel right** like a senior frontend developer would ship it (checks 15-28). Check the UI the way a user meets it: open it in a real browser, at phone, tablet and desktop size, click every button, and read the console. **A check passes only with evidence from this run** (a screenshot, a snapshot, a console log, or a file:line). Fix every fail, re-check, loop until 100% or blocked, then hand over the report.
 
-Tools: Playwright MCP (`browser_navigate`, `browser_resize`, `browser_snapshot`, `browser_take_screenshot`, `browser_click`, `browser_fill_form`, `browser_console_messages`, `browser_network_requests`, `browser_evaluate`). If they aren't loaded, load them with ToolSearch. If no browser tool is available, say so and fall back to static checks only - and mark the browser checks as "not run", never as passed.
+Tools: Playwright MCP (`browser_navigate`, `browser_resize`, `browser_snapshot`, `browser_take_screenshot`, `browser_click`, `browser_fill_form`, `browser_console_messages`, `browser_network_requests`, `browser_evaluate`). Use whatever browser tool your agent has: Playwright MCP in Claude Code (load deferred tools with ToolSearch) or Gemini CLI, Antigravity's built-in browser, or a headless Playwright script run from the shell (`npx playwright`). The steps below name Playwright MCP tools; map them to your tool's equivalent (open URL, resize, snapshot/screenshot, click, read console, read network, run JS in page). If no browser tool is available, say so and fall back to static checks only - and mark the browser checks as "not run", never as passed.
+
+Shell commands are written for bash. On Windows PowerShell without bash, use the equivalent (`Select-String` for grep).
 
 ## Step 0: Start the app and draw the map (kid-simple)
 
