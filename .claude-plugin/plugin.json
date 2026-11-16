@@ -1,0 +1,12 @@
+{
+  "name": "health-check",
+  "displayName": "Health Check",
+  "version": "1.0.0",
+  "description": "Check, fix and report on Express backend health and frontend UI health (buttons, mobile/tablet layout, senior-level UX), with kid-simple maps of the app.",
+  "author": {
+    "name": "YOUR_NAME"
+  },
+  "repository": "https://github.com/YOUR_GITHUB_NAME/YOUR_REPO",
+  "license": "MIT",
+  "keywords": ["express", "backend", "frontend", "ui", "ux", "responsive", "debug", "health-check", "audit"]
+}

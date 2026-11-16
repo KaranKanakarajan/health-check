@@ -1,0 +1,15 @@
+{
+  "name": "health-check",
+  "description": "Skills that check, fix and report on backend and frontend health.",
+  "owner": {
+    "name": "YOUR_NAME"
+  },
+  "plugins": [
+    {
+      "name": "health-check",
+      "source": "./",
+      "description": "Check, fix and report on Express backend health and frontend UI health (buttons, mobile/tablet layout, senior-level UX).",
+      "version": "1.0.0"
+    }
+  ]
+}

@@ -17,30 +17,34 @@ A check only counts as passed with proof from that run, such as command output, 
 
 ## Install
 
-Copy the skill folders into your Claude Code skills directory:
+In Claude Code, run:
+
+```
+/plugin marketplace add YOUR_GITHUB_NAME/YOUR_REPO
+/plugin install health-check@health-check
+```
+
+Restart Claude Code if the commands don't show up yet. To get new versions later, run `/plugin marketplace update health-check`.
+
+<details>
+<summary>Manual install (without the plugin system)</summary>
+
+Copy the skill folders into your skills directory. Without the plugin, the commands have no prefix (`/frontend-ui-health`).
 
 ```bash
-# all projects (personal)
-git clone https://github.com/<your-username>/<this-repo>.git
-cp -r <this-repo>/skills/* ~/.claude/skills/
-
-# or one project only
-cp -r <this-repo>/skills/* <your-project>/.claude/skills/
+git clone https://github.com/YOUR_GITHUB_NAME/YOUR_REPO.git
+cp -r YOUR_REPO/skills/* ~/.claude/skills/
 ```
 
-On Windows (PowerShell):
-
-```powershell
-Copy-Item -Recurse <this-repo>\skills\* $HOME\.claude\skills\
-```
+</details>
 
 ## Use
 
 In Claude Code, inside your project:
 
 ```
-/express-backend-debug   check backend health and give me the report
-/frontend-ui-health      check the UI on mobile, tablet and desktop and fix it
+/health-check:express-backend-debug   check backend health and give me the report
+/health-check:frontend-ui-health      check the UI on mobile, tablet and desktop and fix it
 ```
 
 Claude also loads them on its own when you say things like "check my backend health", "why does login return 401", "draw my backend simply", or "the navbar is broken on mobile".
@@ -54,3 +58,7 @@ Claude also loads them on its own when you say things like "check my backend hea
 
 - The skills fix bugs. They don't redesign your app or change your API shape unless that is the bug, and the report lists any such change.
 - When the UI fails because of a backend error (CORS, 401, 500), the frontend skill hands off to the backend skill.
+
+## License
+
+[MIT](LICENSE)
