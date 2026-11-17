@@ -13,6 +13,29 @@ Tools: Playwright MCP (`browser_navigate`, `browser_resize`, `browser_snapshot`,
 
 Shell commands are written for bash. On Windows PowerShell without bash, use the equivalent (`Select-String` for grep).
 
+## Safety (never break real things)
+
+- **Local/dev only.** Test on the local dev server. A live/production URL -> ask first.
+- **Don't click danger with real data.** Skip or ask before buttons that delete, pay, send email/SMS, log out other sessions, or change account settings. Use a test account and test data; fill forms with `hc-test-<time>@example.com`. Payments only in test mode.
+- **No secrets in report.** Don't paste tokens, cookies or `.env` values from network/console captures; write `[redacted]`.
+- **Clean up.** Stop the dev server and browser you started; delete screenshots from the repo unless the user wants them (save to a temp folder).
+
+## No cheating (a fake 100% is worse than a real 70%)
+
+| Shortcut | Not allowed because | Real fix |
+|---|---|---|
+| `body { overflow-x: hidden }` to pass #7 | Hides the scroll, content still cut off | Fix the wide element the script names |
+| `display: none` on content at phone size | User loses features on mobile | Restack, wrap, or move it into a menu |
+| Remove `console.error`, empty `catch`, error boundary that renders nothing (#3) | Hides the bug | Fix the cause of the error |
+| `eslint-disable` / turning rules off (#2) | Hides the problem | Fix the code; if the rule is truly wrong, ask |
+| Shrink text or icons to stop overlap | Makes it unreadable | Wrap, stack, or truncate with full text on hover/tap |
+| Mark a check N/A, or "passed" without the proof listed | Fake score | N/A only if the feature doesn't exist |
+| Repaint the whole brand to pass contrast (#18) | Not your call | Adjust shade of the same hue; bigger changes go to Senior suggestions |
+
+Same check still failing after 3 real attempts -> stop, mark it open with what you tried.
+
+Scripts are helpers, not judges: they miss text on images/gradients and flag intended horizontal scrollers (carousels, code blocks, tables in a scroll box). Confirm every hit, and every pass on a tricky page, with a screenshot.
+
 ## Step 0: Start the app and draw the map (kid-simple)
 
 1. Read `package.json`; start the dev server (`npm run dev` / `npm start`) in the background; note the URL. Start the backend too if the UI calls it.
@@ -50,7 +73,7 @@ Viewports: **phone 375x812**, **tablet 768x1024**, **desktop 1440x900**. Run che
 | 7 | Responsive | No horizontal scroll | overflow script below |
 | 8 | Responsive | Nothing cut off or overlapping; text readable (>=14px body on phone) | screenshot |
 | 9 | Responsive | Navbar collapses to a working menu on phone/tablet; menu opens and closes | click + screenshot |
-| 10 | Touch | Tap targets >= 44x44px on phone | tap-size script below |
+| 10 | Touch | Buttons, icons and nav links >= 44x44px on phone; any target >= 24x24px with space around it (inline text links in a paragraph are exempt) | tap-size script below |
 | 11 | Components | Buttons have hover, focus, disabled and loading states; same style across the app | snapshot + code |
 | 12 | Images | Images scale (`max-width: 100%`), have `alt`, don't stretch | screenshot + code |
 | 13 | A11y | Every button/input has a name or label; Tab key reaches all controls in order | `browser_snapshot` |
@@ -86,8 +109,10 @@ Horizontal overflow (check 7):
 ```js
 () => {
   const w = document.documentElement.clientWidth;
+  // Skip elements inside an intended scroll box (carousel, table wrapper, code block).
+  const inScroller = el => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) { if (/(auto|scroll|hidden)/.test(getComputedStyle(p).overflowX)) return true; } return false; };
   const bad = [...document.querySelectorAll('body *')]
-    .filter(el => el.getBoundingClientRect().right > w + 1)
+    .filter(el => el.getBoundingClientRect().right > w + 1 && !inScroller(el))
     .slice(0, 15)
     .map(el => `${el.tagName.toLowerCase()}.${[...el.classList].join('.')} right=${Math.round(el.getBoundingClientRect().right)}`);
   return { scrolls: document.documentElement.scrollWidth > w, width: w, culprits: bad };
@@ -98,7 +123,7 @@ Small tap targets (check 10, run at phone size):
 
 ```js
 () => [...document.querySelectorAll('button, a, input, select, [role="button"]')]
-  .filter(el => el.offsetParent !== null)
+  .filter(el => el.offsetParent !== null && !(el.tagName === 'A' && el.closest('p, li')))  // inline text links exempt
   .map(el => ({ el, r: el.getBoundingClientRect() }))
   .filter(({ r }) => r.width < 44 || r.height < 44)
   .slice(0, 20)

@@ -4,7 +4,7 @@ Two [Claude Code](https://claude.com/claude-code) skills that check a web app's 
 
 | Skill | What it checks |
 |---|---|
-| [`express-backend-debug`](skills/express-backend-debug/SKILL.md) | Node.js / Express backends: server boot and env vars, middleware order, routes, JWT auth, async error handling, database errors, basic security, deep CORS checks (preflight, origins, credentials), one clear error format with codes, hints and request IDs, and reading the browser's Network panel to find what really failed. 22 checks. |
+| [`express-backend-debug`](skills/express-backend-debug/SKILL.md) | Node.js / Express backends: server boot and env vars, middleware order, routes, JWT auth, async error handling, database errors, basic security, deep CORS checks (preflight, origins, credentials), one clear error format with codes, hints and request IDs, reading the browser's Network panel to find what really failed, and adds a public `GET /health` route (200 when up, 503 when the database is down). 23 checks. |
 | [`frontend-ui-health`](skills/frontend-ui-health/SKILL.md) | Web frontends (React, Vite, Next.js, plain HTML): every button, link and form, console and network errors, responsive layout at phone (375px), tablet (768px) and desktop (1440px), plus a senior-level UX review: spacing and type scale, contrast, consistency, loading/empty/error states, action feedback, form UX, focus and copy. 28 checks. |
 
 ## What you get
